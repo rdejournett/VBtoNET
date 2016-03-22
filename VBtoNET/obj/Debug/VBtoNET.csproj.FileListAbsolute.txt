@@ -1,0 +1,10 @@
+c:\users\rob\documents\visual studio 2015\Projects\VBtoNET\VBtoNET\bin\Debug\VBtoNET.exe.config
+c:\users\rob\documents\visual studio 2015\Projects\VBtoNET\VBtoNET\bin\Debug\VBtoNET.exe
+c:\users\rob\documents\visual studio 2015\Projects\VBtoNET\VBtoNET\bin\Debug\VBtoNET.pdb
+c:\users\rob\documents\visual studio 2015\Projects\VBtoNET\VBtoNET\obj\Debug\VBtoNET.csprojResolveAssemblyReference.cache
+c:\users\rob\documents\visual studio 2015\Projects\VBtoNET\VBtoNET\obj\Debug\VBtoNET.Properties.Resources.resources
+c:\users\rob\documents\visual studio 2015\Projects\VBtoNET\VBtoNET\obj\Debug\VBtoNET.csproj.GenerateResource.Cache
+c:\users\rob\documents\visual studio 2015\Projects\VBtoNET\VBtoNET\obj\Debug\VBtoNET.exe
+c:\users\rob\documents\visual studio 2015\Projects\VBtoNET\VBtoNET\obj\Debug\VBtoNET.pdb
+c:\users\rob\documents\visual studio 2015\Projects\VBtoNET\VBtoNET\bin\Debug\DesignerTemplate.txt
+c:\users\rob\documents\visual studio 2015\Projects\VBtoNET\VBtoNET\obj\Debug\VBtoNET.VBtoNET.resources
