@@ -61,7 +61,6 @@ namespace VBtoNET
         public string ConvertForm(MyForm form, string s, List<string> controlFormArray)
         {
 
-            if (form.General == null) return ""; /// we used the wrong input
             string name = form.General.Name;
 
                 // first replace the form name
@@ -73,8 +72,11 @@ namespace VBtoNET
                 s += VBtoNET.padding + "Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)\r";
                 s += VBtoNET.padding + "Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font\r";
                 s += VBtoNET.padding + "Me.ClientSize = New System.Drawing.Size(" + form.General.Sizex + "," + form.General.Sizey + ")" + "\r";
-                // add controls
-                foreach (string ctrlstr in controlFormArray)
+                s += VBtoNET.padding + "Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent" + "\r";
+
+
+            // add controls
+            foreach (string ctrlstr in controlFormArray)
                 {
                     s += VBtoNET.padding + ctrlstr;
                 }

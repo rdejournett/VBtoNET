@@ -93,18 +93,18 @@
             // 
             // txtFormName
             // 
-            this.txtFormName.Location = new System.Drawing.Point(264, 540);
+            this.txtFormName.Location = new System.Drawing.Point(237, 540);
             this.txtFormName.Name = "txtFormName";
-            this.txtFormName.Size = new System.Drawing.Size(100, 20);
+            this.txtFormName.Size = new System.Drawing.Size(156, 20);
             this.txtFormName.TabIndex = 8;
             // 
             // btnCopyToClipboard
             // 
             this.btnCopyToClipboard.Location = new System.Drawing.Point(421, 540);
             this.btnCopyToClipboard.Name = "btnCopyToClipboard";
-            this.btnCopyToClipboard.Size = new System.Drawing.Size(115, 23);
+            this.btnCopyToClipboard.Size = new System.Drawing.Size(147, 23);
             this.btnCopyToClipboard.TabIndex = 9;
-            this.btnCopyToClipboard.Text = "Copy to Clipboard";
+            this.btnCopyToClipboard.Text = "Copy Results to Clipboard";
             this.btnCopyToClipboard.UseVisualStyleBackColor = true;
             this.btnCopyToClipboard.Click += new System.EventHandler(this.btnCopyToClipboard_Click);
             // 

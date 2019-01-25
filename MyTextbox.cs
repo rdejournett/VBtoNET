@@ -30,7 +30,7 @@ namespace VBtoNET
         }
 
         public string Convert(MyTextbox o, string s, List<string> controlVariableArray, List<string> controlFormArray,
-            List<string> controlGBArray, object parentObj)
+            List<string> controlGBArray, object parentObj, List<string> datasourceArray)
         {
 
             string name = o.General.Name;
@@ -38,14 +38,13 @@ namespace VBtoNET
 
             s += VBtoNET.padding + "Me." + name + ".Text = \"" + o.General.Text + "\"" + "\r";
             s += VBtoNET.padding + "Me." + name + ".Multiline = " + multiline.ToString() + "" + "\r";
-            
-            if (!String.IsNullOrEmpty(o.dataField) || !String.IsNullOrEmpty(o.dataSource)) {
-                string dataBindingInfo = VBtoNET.padding + name + ".Text = ";
-                dataBindingInfo += o.dataSource.Replace("rdc", "dt") + ".Rows(0)(";
-                dataBindingInfo += "\"" + o.dataField + "\").ToString\r";
-                //TxtLocType.Text = dtPhantomLocation.Rows(0)("LocType").ToString
-                VBtoNET.controlDBList.Add(dataBindingInfo);
-            }
+            if (!String.IsNullOrEmpty(o.dataField))
+                s += VBtoNET.padding + "'Datafield = \"" + o.dataField + "\"" + "\r";
+            if (!String.IsNullOrEmpty(o.dataSource))
+                s += VBtoNET.padding + "'Datasource = \"" + o.dataSource + "\"" + "\r";
+
+            if (!String.IsNullOrEmpty(o.dataSource) && !String.IsNullOrEmpty(o.dataField))
+                datasourceArray.Add(name + ".Text = " + o.dataSource.Replace("rdc", "dt") + ".Rows(0)(\"" + o.dataField + "\").toString");
 
             return s;
         }

@@ -16,7 +16,7 @@ namespace VBtoNET
         List<string> controlFormArray = new List<string>();
         List<string> controlGBArray = new List<string>();
         List<object> parentArray = new List<object>();
-        //static public List<string> controlNameList = new List<string>();
+        static public List<string> controlDBList = new List<string>(); // stores databindings
         List<string> controlTypeList = new List<string>()
         {
             "VB.Form",
@@ -46,13 +46,20 @@ Partial Class ##REPLACENAME## ";
             s += System.IO.File.ReadAllText("DesignerTemplate.txt");
             output = s;
 
+            controlVariableArray = new List<string>();
+            controlFormArray = new List<string>();
+            controlGBArray = new List<string>();
+            parentArray = new List<object>();
+            controlDBList = new List<string>(); // stores databindings
+            controlTypeList = new List<string>();
+
         }
 
         private void btnExecute_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            try {
-
+            //try {
+            rtbNET.Text = "";
             
             InitNetDesigner();
             int beginline = 0, endline = 0;
@@ -79,7 +86,6 @@ Partial Class ##REPLACENAME## ";
                 } else
                     s = rtbVB.Lines[i];
 
-
                 if (s.Contains("Begin VB.Form")) {
 
                     beginline = i;
@@ -93,8 +99,12 @@ Partial Class ##REPLACENAME## ";
                     while (!formEnd && i < rtbVB.Lines.Count());
                     endline = i;
                     form = form.CreateForm(beginline, endline, rtbVB.Lines);
-                    if (form == null) return; // bad parsing, exit
-                        txtFormName.Text = form.General.Name;
+                    
+                    if (form.General == null || String.IsNullOrEmpty(form.General.Name)) {
+                        MessageBox.Show("Trouble parsing VB form, did you input a VB .frm file?");
+                        return;
+                    }
+                    txtFormName.Text = form.General.Name;
                     parentArray.Add((MyForm)form);
                 }  
 
@@ -254,15 +264,20 @@ Partial Class ##REPLACENAME## ";
 
             }
             // set up form
-            output = form.ConvertForm(form, output, controlFormArray);
 
+
+            output = form.ConvertForm(form, output, controlFormArray); 
+            if (String.IsNullOrEmpty(output)) {
+                MessageBox.Show("Trouble parsing VB form, did you input a VB .frm file?");
+                return;
+            }
             // end the file
             EndDesigner();
             this.Cursor = Cursors.Arrow;
-            } catch (Exception ex) {
-                this.Cursor = Cursors.Arrow;
-                MessageBox.Show("Exception in VB6 Parsing: " + ex.Message);
-            }
+            //} catch (Exception ex) {
+            //    this.Cursor = Cursors.Arrow;
+            //    MessageBox.Show("Exception in VB6 Parsing: " + ex.Message);
+            //}
         }
 
         private void SkipProperties(int i, string s)
@@ -281,27 +296,39 @@ Partial Class ##REPLACENAME## ";
             {
                 s += ctrl;
             }
+            s += "\r\r\r'     -----Control Databindings-----\r";
+            foreach (string ctrl in controlDBList) {
+                s += "'" + ctrl;
+            }
+
             s += "End Class\r";
             output = output + s;
             rtbNET.Text = output;
         }
 
-  
-        public static string GetProperty(string s, int beginline, int endline, string[] lines)
+        public static string GetFirstWord(string line) {
+            line = line.Trim();
+            if (line.IndexOf(" ") >0)
+                line = line.Substring(0, line.IndexOf(" "));
+            return line;
+        }
+        public static string GetProperty(string target, int beginline, int endline, string[] lines)
         {
             string property = "";
             beginline++;
-            string line = lines[beginline];
+            string line = GetFirstWord(lines[beginline]);
+            //string firstWord = line.Trim().Substring(0, line.IndexOf(" "));
+            //if (String.IsNullOrEmpty(firstWord)) return ""; // we are not in the right spot, abort.
             int i = beginline;
-            while (!line.Contains(s) && i < endline && i < lines.Count())
+            while (!line.Contains(target) && i < endline && i < lines.Count()) 
             {
                 i++;
-                line = lines[i];
+                line = GetFirstWord(lines[i]);
             }
             if (i == endline)
                 property = "";
             else
-                property = line.Substring(line.IndexOf('=') + 1).Trim().Replace("\"", "");
+                property = lines[i].Substring(lines[i].IndexOf('=') + 1).Trim().Replace("\"", "");
             return property;
         }
 
